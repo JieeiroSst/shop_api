@@ -7,7 +7,7 @@ const {
     updateCollection,
     removeByIdCollection,
 } = require('../../../models/collection');
-const { authenticatedJWTAdmin } = require('../../../auth/admin/auth');
+const { authenticatedJWTAdmin } = require('../../../auth/admin');
 const { decode } = require('../../../utils/base64');
 const router = new koa_router({ prefix: '/admin/collection' });
 

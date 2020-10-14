@@ -33,8 +33,18 @@ const CONFIG = {
 
 app.use(session(CONFIG, app));
 
-app.use(adminRouter.login.routes()).use(adminRouter.signup.routes());
-app.use(webRouter.login.routes()).use(webRouter.signup.routes());
+app
+    .use(adminRouter.login.routes())
+    .use(adminRouter.signup.routes())
+    .use(adminRouter.collection.routes())
+    .use(adminRouter.customer.routes())
+    .use(adminRouter.product.routes());
+
+app
+    .use(webRouter.login.routes())
+    .use(webRouter.signup.routes())
+    .use(webRouter.collection.routes())
+    .use(webRouter.product.routes());
 
 app.use(
     mount(

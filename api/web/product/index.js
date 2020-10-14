@@ -7,7 +7,7 @@ const {
     updateProduct,
     removeByIdProduct,
 } = require('../../../models/product');
-const { authenticatedJWTWeb } = require('../../../auth/web/auth');
+const { authenticatedJWTWeb } = require('../../../auth/web');
 const { decode } = require('../../../utils/base64');
 
 const router = new koa_router({ prefix: '/product' });
