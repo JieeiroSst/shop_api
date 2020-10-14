@@ -1,0 +1,40 @@
+{
+    "name": "store",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "assert": "^2.0.0",
+        "atob": "^2.1.2",
+        "bcrypt": "^5.0.0",
+        "btoa": "^1.2.1",
+        "dataloader": "^2.0.0",
+        "dotenv": "^8.2.0",
+        "graphql": "^0.13.2",
+        "graphql-iso-date": "^3.6.1",
+        "graphql-relay": "^0.6.0",
+        "graphql-tools": "^4.0.6",
+        "join-monster": "^2.1.2",
+        "join-monster-graphql-tools-adapter": "^0.1.0",
+        "js-base64": "^3.5.2",
+        "jsonwebtoken": "^8.5.1",
+        "knex": "^0.21.6",
+        "koa": "^2.13.0",
+        "koa-bodyparser": "^4.3.0",
+        "koa-convert": "^2.0.0",
+        "koa-graphql": "^0.8.0",
+        "koa-mount": "^4.0.0",
+        "koa-router": "^9.4.0",
+        "koa-session": "^6.1.0",
+        "lodash": "^4.17.20",
+        "nodemon": "^2.0.4",
+        "pg": "^8.4.1",
+        "require-text": "0.0.1"
+    }
+}

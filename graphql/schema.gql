@@ -1,0 +1,164 @@
+scalar Datetime
+
+#Read me too get(rest api)
+type Query {
+  #node interface
+  node(id: ID!): Node
+
+  #collections
+  collections(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): CollectionConnection
+
+  #products
+  products(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): ProductConnection
+
+  #customer
+  customers(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): CustomerConnection
+
+  #users
+  users(first: Int, after: String, last: Int, before: String): UserConnection
+}
+
+#Write me too post put delete (rest api)
+type Mutation {
+  #collections
+  createCollection(name: String!): Collection
+  updateCollection(id: Int!, name: String!): Collection
+  deleteCollection(id: Int!): Collection
+
+  #products
+  createProduct(
+    name: String
+    decription: String
+    price: Int
+    collectionID: Int
+  ): Product
+  updateProduct(
+    id: Int
+    name: String
+    decription: String
+    price: Int
+    collectionID: Int
+  ): Product
+  deleteProduct(id: Int): Product
+}
+
+#interface node id
+interface Node {
+  id: ID!
+}
+
+#page info
+type PageInfo {
+  hashNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor: String
+  endCursor: String
+}
+
+#table roles
+type Role {
+  id: ID!
+  name: String!
+}
+
+#table customers
+type CustomerEdge {
+  node: Customer
+  cursor: String
+}
+
+type CustomerConnection {
+  edges: [CustomerEdge]
+  pageInfo: PageInfo
+  total: Int
+}
+
+type Customer implements Node {
+  id: ID!
+  username: String!
+  password: String!
+  roleID: Int
+  createdAt: Datetime
+  updatedAt: Datetime
+  role: Role
+}
+
+#table users
+type User implements Node {
+  id: ID!
+  username: String!
+  password: String!
+  roleID: Int
+  createdAt: Datetime
+  updatedAt: Datetime
+  role: Role
+}
+
+type UserEdge {
+  node: User
+  cursor: String
+}
+
+type UserConnection {
+  edges: [UserEdge]
+  pageInfo: PageInfo
+  total: Int
+}
+
+#table products
+type Product implements Node {
+  id: ID!
+  name: String
+  decription: String
+  price: Int
+  collectionID: Int
+  createdAt: Datetime
+  updatedAt: Datetime
+  collections: [Collection]
+}
+
+type ProductEdge {
+  node: Product
+  cursor: String
+}
+
+type ProductConnection {
+  edges: [ProductEdge]
+  pageInfo: PageInfo
+  total: Int
+}
+
+#table collections
+type Collection implements Node {
+  id: ID!
+  name: String
+  createdAt: Datetime
+  updatedAt: Datetime
+  products: [Product]
+}
+
+type CollectionEdges {
+  node: Collection
+  cursor: String
+}
+
+type CollectionConnection {
+  edges: [CollectionEdges]
+  pageInfo: PageInfo
+  total: Int
+}
