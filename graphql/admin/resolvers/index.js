@@ -6,6 +6,7 @@ const modules = [
     require('./node'),
     require('./customer'),
     require('./user'),
+    require('./role'),
 ];
 
 const meregeAll = (item) => _.reduce(item, _.merge);

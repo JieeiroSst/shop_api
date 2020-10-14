@@ -40,6 +40,11 @@ type Mutation {
   updateCollection(id: Int!, name: String!): Collection
   deleteCollection(id: Int!): Collection
 
+  #role
+  createRole(name: String): Role
+  updateRole(id: Int, name: String): Role
+  deleteRole(id: Int): Role
+
   #products
   createProduct(
     name: String

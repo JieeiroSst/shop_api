@@ -33,6 +33,22 @@ joinMonsterAdapt(schemaAdmin, {
                     id: 'desc',
                 },
             },
+
+            users: {
+                sqlTable: 'users',
+                sqlPaginate: true,
+                orderBy: {
+                    id: 'desc',
+                },
+            },
+
+            customers: {
+                sqlTable: 'customers',
+                sqlPaginate: true,
+                orderBy: {
+                    id: 'desc',
+                },
+            },
         },
     },
 
@@ -112,6 +128,12 @@ joinMonsterAdapt(schemaAdmin, {
             updatedAt: {
                 sqlColumn: 'updated_at',
             },
+            role: {
+                sqlTable: 'roles',
+                sqlJoin: (customerTable, roleTable) => {
+                    return `${customerTable}.role_id=${roleTable}.id`;
+                },
+            },
         },
     },
 
@@ -128,6 +150,28 @@ joinMonsterAdapt(schemaAdmin, {
 
             updatedAt: {
                 sqlColumn: 'updated_at',
+            },
+            role: {
+                sqlTable: 'roles',
+                sqlJoin: (userTable, roleTable) => {
+                    console.log(userTable, roleTable);
+                    return `${userTable}.role_id=${roleTable}.id`;
+                },
+            },
+        },
+    },
+
+    Role: {
+        name: 'Role',
+        sqlTable: 'roles',
+        uniqueKey: 'id',
+        sqlPaginate: true,
+        fields: {
+            id: {
+                sqlColumn: 'id',
+            },
+            name: {
+                sqlColumn: 'name',
             },
         },
     },

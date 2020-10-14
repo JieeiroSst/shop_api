@@ -15,3 +15,7 @@ Gồm có 2 trang web
 - [x] Admin: có thể làm gì cũng được
 - [] Staff: phân cho các chức năng gì mình tự chỉ định
 - [x] Mình sẽ làm CRUD cái collections, products, users, customers
+
+docker build -t app .
+docker container run -p 4000:8081 app
+docker exec -ti <container id> /bin/bash

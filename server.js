@@ -3,7 +3,6 @@ const bodyParser = require('koa-bodyparser');
 const session = require('koa-session');
 const KoaConvert = require('koa-convert');
 const mount = require('koa-mount');
-const KoaRouter = require('koa-router');
 const graphqlHTTP = require('koa-graphql');
 
 const { schemaAdmin } = require('./graphql/admin/index');
