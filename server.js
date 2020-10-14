@@ -1,22 +1,21 @@
-const koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const session = require('koa-session');
-const KoaConvert = require('koa-convert');
-const mount = require('koa-mount');
-const graphqlHTTP = require('koa-graphql');
+const koa = require('koa'),
+    bodyParser = require('koa-bodyparser'),
+    session = require('koa-session'),
+    KoaConvert = require('koa-convert'),
+    mount = require('koa-mount'),
+    graphqlHTTP = require('koa-graphql'),
+    cors = require('cors');
 
-const { schemaAdmin } = require('./graphql/admin/index');
-const { schemaWeb } = require('./graphql/web/index');
+const { schemaAdmin } = require('./graphql/admin/index'), { schemaWeb } = require('./graphql/web/index');
 
-const { contextAdmin } = require('./auth/admin');
-const { contextShop } = require('./auth/web');
+const { contextAdmin } = require('./auth/admin'), { contextShop } = require('./auth/web');
 
-const adminRouter = require('./api/admin');
-const webRouter = require('./api/web');
+const adminRouter = require('./api/admin'),
+    webRouter = require('./api/web');
 
 const app = new koa();
 
-app.use(bodyParser());
+app.use(cors()).use(bodyParser());
 
 const CONFIG = {
     key: 'koa.sess',
