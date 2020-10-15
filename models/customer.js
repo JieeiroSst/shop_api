@@ -2,18 +2,18 @@ const db = require('../db/knex');
 
 const nametable = 'customers';
 
-const getAllCustomer = async() => {
+const customerAll = async() => {
     return await db(nametable);
 };
 
-const getByIdCustomer = async(id) => {
+const customerById = async(id) => {
     const condition = {
         id,
     };
     return await db(nametable).where(condition);
 };
 
-const getByNameCustomer = async(username) => {
+const customerByName = async(username) => {
     const condition = {
         username,
     };
@@ -26,7 +26,9 @@ const createCustomer = async(username, password, roleId) => {
         password,
         role_id: roleId,
     };
-    return await db(nametable).insert(entity).returning('*');
+    return await db(nametable)
+        .insert(entity)
+        .returning('*');
 };
 
 const updateCustomer = async(
@@ -47,21 +49,27 @@ const updateCustomer = async(
     const condition = {
         id,
     };
-    return await db(nametable).where(condition).update(entity).returning('*');
+    return await db(nametable)
+        .where(condition)
+        .update(entity)
+        .returning('*');
 };
 
-const removeByIdCustomer = async(id) => {
+const removeCustomerById = async(id) => {
     const condition = {
         id,
     };
-    return await db(nametable).del().where(condition).returning('*');
+    return await db(nametable)
+        .del()
+        .where(condition)
+        .returning('*');
 };
 
 module.exports = {
-    getAllCustomer,
-    getByIdCustomer,
-    getByNameCustomer,
+    customerAll,
+    customerById,
+    customerByName,
     createCustomer,
     updateCustomer,
-    removeByIdCustomer,
+    removeCustomerById,
 };

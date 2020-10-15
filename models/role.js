@@ -3,11 +3,11 @@ const db = require('../db/knex');
 
 const nameTable = 'roles';
 
-const getAllRole = async() => {
+const roleAll = async() => {
     return await db(nameTable);
 };
 
-const getByIdRole = async(id) => {
+const roleById = async(id) => {
     const condition = {
         id,
     };
@@ -39,7 +39,7 @@ const updateRole = async(id, name) => {
         .returning('*');
 };
 
-const deleteRole = async(id) => {
+const removeRoleById = async(id) => {
     const condition = {
         id,
     };
@@ -50,9 +50,9 @@ const deleteRole = async(id) => {
 };
 
 module.exports = {
-    getAllRole,
-    getByIdRole,
+    roleAll,
+    roleById,
     createRole,
     updateRole,
-    deleteRole,
+    removeRoleById,
 };

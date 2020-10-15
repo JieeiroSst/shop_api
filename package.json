@@ -34,6 +34,8 @@
         "koa-session": "^6.1.0",
         "lodash": "^4.17.20",
         "nodemon": "^2.0.4",
+        "passport": "^0.4.1",
+        "passport-jwt": "^4.0.0",
         "pg": "^8.4.1",
         "require-text": "0.0.1"
     }
