@@ -29,4 +29,4 @@ const newProduct = async(ctx) => {
     };
 };
 
-module.exports = { products, product };
+module.exports = { products, product, newProduct };

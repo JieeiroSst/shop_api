@@ -1,5 +1,5 @@
 const { Token } = require('graphql');
-const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const { config } = require('../../config');
 
