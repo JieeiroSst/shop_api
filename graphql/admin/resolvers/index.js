@@ -1,6 +1,12 @@
 const _ = require('lodash');
 
-const modules = [require('./collection'), require('./node')];
+const modules = [
+    require('./collection'),
+    require('./node'),
+    require('./product'),
+    require('./role'),
+    require('./user'),
+];
 
 const meregeAll = (item) => _.reduce(item, _.merge);
 
