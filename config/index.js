@@ -6,9 +6,9 @@ const config = {
     admin: () => {
         return KEY_SECRET_ADMIN;
     },
-    // web: () => {
-    //     return KEY_SECRET_SHOP;
-    // },
+    web: () => {
+        return KEY_SECRET_SHOP;
+    },
 };
 
 module.exports = { config };

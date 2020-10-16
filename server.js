@@ -1,20 +1,22 @@
 const koa = require('koa');
 const bodyParser = require('koa-bodyparser');
-const passport = require('passport');
+const json = require('koa-json');
 const session = require('koa-session');
 
-const loginRouter = require('./router/login');
+const passport = require('./services');
+const userApi = require('./api/user');
 
 const app = new koa();
-
+app.use(session({ signed: false }, app));
+app.use(json());
 app.use(bodyParser());
-app.use(session(app));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(loginRouter.routes());
+app.use(userApi.routes());
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`server running port ${port}`);
 });
