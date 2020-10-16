@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const brcypt = require('bcrypt');
 
-const { userByName } = require('../models/user');
+const { userByName } = require('../../models/user');
 
 module.exports = new LocalStrategy({ session: false },
     async(username, password, callback) => {

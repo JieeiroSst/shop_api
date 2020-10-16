@@ -3,18 +3,24 @@ const bodyParser = require('koa-bodyparser');
 const json = require('koa-json');
 const session = require('koa-session');
 
-const passport = require('./services');
-const userApi = require('./api/user');
+const passportAdmin = require('./base/admin');
+// const passportWeb = require('./base/web');
+
+const adminApi = require('./api/admin');
 
 const app = new koa();
-app.use(session({ signed: false }, app));
-app.use(json());
-app.use(bodyParser());
 
-app.use(passport.initialize());
-app.use(passport.session());
+app
+    .use(session({ signed: false }, app))
+    .use(json())
+    .use(bodyParser());
 
-app.use(userApi.routes());
+app
+    .use(passportAdmin.initialize())
+    .use(passportAdmin.session())
+    .use(adminApi.routes());
+
+//app.use(passportWeb.initialize()).use(passportWeb.session());
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

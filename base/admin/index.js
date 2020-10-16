@@ -2,7 +2,7 @@ const passport = require('koa-passport');
 const LocalStrategy = require('./local');
 const JwtStrategy = require('./jwt');
 
-const { UserById } = require('../models/user');
+const { UserById } = require('../../models/user');
 
 passport.use(LocalStrategy);
 passport.use(JwtStrategy);
