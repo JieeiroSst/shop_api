@@ -4,7 +4,7 @@ const { login } = require('./user');
 const { products, product } = require('./product');
 const passport = require('../../base/admin');
 
-const router = new Koa_router();
+const router = new Koa_router({ prefix: '/admin' });
 
 router
     .post('/login', login)
