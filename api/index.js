@@ -1,6 +1,6 @@
 const Koa_router = require('koa-router');
 
-const { login } = require('../decentralization');
+const { login } = require('./user');
 
 const router = new Koa_router();
 
