@@ -4,6 +4,7 @@ const json = require('koa-json');
 const session = require('koa-session');
 
 const { passport } = require('./base');
+const api = require('./api');
 
 const app = new koa();
 
@@ -13,6 +14,8 @@ app
     .use(bodyParser());
 
 app.use(passport.initialize()).use(passport.session());
+
+app.use(api.routes());
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

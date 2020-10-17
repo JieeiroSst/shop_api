@@ -10,9 +10,10 @@ const login = (ctx, next) => {
             ctx.body = { success: false };
             ctx.throw(401);
         } else {
+            console.log(user);
             const [role] = await roleById(user.role_id);
             const pay_load = {
-                user: user.user.username,
+                user: user.username,
                 role: role.name,
             };
             const token = jwt.sign(pay_load, config.key());
