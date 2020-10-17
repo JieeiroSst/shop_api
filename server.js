@@ -2,12 +2,8 @@ const koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const json = require('koa-json');
 const session = require('koa-session');
-const mount = require('koa-mount');
-const graphqlHTTP = require('koa-graphql');
 
-const passportAdmin = require('./base/admin');
-
-const adminApi = require('./api/admin');
+const { passport } = require('./base');
 
 const app = new koa();
 
@@ -16,10 +12,7 @@ app
     .use(json())
     .use(bodyParser());
 
-app
-    .use(passportAdmin.initialize())
-    .use(passportAdmin.session())
-    .use(adminApi.routes());
+app.use(passport.initialize()).use(passport.session());
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
