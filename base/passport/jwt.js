@@ -4,8 +4,11 @@ const JwtStrategy = require('passport-jwt').Strategy,
 const { config } = require('../../config');
 
 const opts = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.key(),
+    jwtFromRequest: ExtractJwt.fromExtractors([
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        ExtractJwt.fromUrlQueryParameter('acces_token'),
+    ]),
 };
 
 module.exports = new JwtStrategy(opts, (jwt_payload, done) => {
