@@ -11,6 +11,7 @@ const login = (ctx, next) => {
             ctx.throw(401);
         } else {
             const [role] = await roleById(user.role_id);
+            console.log('2131231', user);
             const pay_load = {
                 id: user.id,
                 user: user.username,

@@ -15,7 +15,8 @@ app
     .use(json())
     .use(bodyParser());
 
-app.use(passport.initialize()).use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(api.routes());
 app.use(adminApi.routes());
