@@ -1,80 +1,28 @@
 const koa = require('koa');
 const bodyParser = require('koa-bodyparser');
+const json = require('koa-json');
 const session = require('koa-session');
-const KoaConvert = require('koa-convert');
-const mount = require('koa-mount');
-const graphqlHTTP = require('koa-graphql');
 
-const { schemaAdmin } = require('./graphql/admin/index');
-const { schemaWeb } = require('./graphql/web/index');
+const passportAdmin = require('./base/admin');
+// const passportWeb = require('./base/web');
 
-const { contextAdmin } = require('./auth/admin');
-const { contextShop } = require('./auth/web');
-
-const adminRouter = require('./api/admin');
-const webRouter = require('./api/web');
+const adminApi = require('./api/admin');
 
 const app = new koa();
 
-app.use(bodyParser());
-
-const CONFIG = {
-    key: 'koa.sess',
-    maxAge: 86400000,
-    autoCommit: true,
-    overwrite: true,
-    httpOnly: true,
-    signed: true,
-    rolling: false,
-    renew: false,
-    secure: true,
-    sameSite: null,
-};
-
-app.use(session(CONFIG, app));
+app
+    .use(session({ signed: false }, app))
+    .use(json())
+    .use(bodyParser());
 
 app
-    .use(adminRouter.login.routes())
-    .use(adminRouter.signup.routes())
-    .use(adminRouter.collection.routes())
-    .use(adminRouter.customer.routes())
-    .use(adminRouter.product.routes());
+    .use(passportAdmin.initialize())
+    .use(passportAdmin.session())
+    .use(adminApi.routes());
 
-app
-    .use(webRouter.login.routes())
-    .use(webRouter.signup.routes())
-    .use(webRouter.collection.routes())
-    .use(webRouter.product.routes());
+//app.use(passportWeb.initialize()).use(passportWeb.session());
 
-app.use(
-    mount(
-        '/graphql/admin',
-        graphqlHTTP(async(ctx) => ({
-            schema: schemaAdmin,
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                token: contextAdmin(ctx),
-            },
-        }))
-    )
-);
-
-app.use(
-    mount(
-        '/graphql',
-        graphqlHTTP(async(ctx) => ({
-            schema: schemaWeb,
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                token: contextShop(ctx),
-            },
-        }))
-    )
-);
-
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`server running port ${port}`);
 });

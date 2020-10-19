@@ -17,16 +17,6 @@ const loginWeb = async(username, password) => {
     }
 };
 
-const loginAdmin = async(username, password) => {
-    const [user] = await getByNameUser(username);
-    const [role] = await getByIdRole(user.role_id);
-    const isValid = bcrypt.compare(password, user.password);
-    if (isValid) {
-        const token = createTokenAdmin(user.username, role.name);
-        return token;
-    }
-};
-
 module.exports = {
     loginAdmin,
     loginWeb,
