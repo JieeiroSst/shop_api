@@ -9,11 +9,7 @@ const router = new Koa_router();
 
 router.post('/login', login);
 
-router.get(
-    '/product',
-    passport.authenticate('jwt', { session: false }),
-    products
-);
+router.get('/product', auth('ADMIN'), products);
 
 router.get('/test', auth('ADMIN'), (ctx) => {
     ctx.body = {
