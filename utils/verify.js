@@ -1,19 +1,17 @@
 const jwt = require('jsonwebtoken');
 
-const { roleById } = require('../models/role');
+const { roleById, roleByName } = require('../models/role');
 
-const auth = async(ctx, next) => {
-    console.log(ctx.state.user);
-    const { authorization: token } = ctx.headers;
-    if (token) {
-        const user = ctx.state.user;
-        if (user.role_id === 1 || user.role_id === 2) {
-            return await next();
+const auth = (roles) => {
+    return async(ctx, next) => {
+        const [role] = await roleByName(roles);
+        const id = role.id;
+        console.log(ctx.state.user);
+        if (ctx.state.user && id === ctx.state.user.role) {
+            await next();
+        } else {
+            ctx.status = 403;
         }
-    }
-    ctx.status = 401;
-    ctx.body = {
-        message: 'Authorization Token not found',
     };
 };
 

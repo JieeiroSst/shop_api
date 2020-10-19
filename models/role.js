@@ -14,6 +14,13 @@ const roleById = async(id) => {
     return await db(nameTable).where(condition);
 };
 
+const roleByName = async(name) => {
+    const condition = {
+        name,
+    };
+    return await db(nameTable).where(condition);
+};
+
 const createRole = async(name) => {
     const entity = {
         name,
@@ -52,6 +59,7 @@ const removeRoleById = async(id) => {
 module.exports = {
     roleAll,
     roleById,
+    roleByName,
     createRole,
     updateRole,
     removeRoleById,
