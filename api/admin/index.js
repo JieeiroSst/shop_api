@@ -1,10 +1,10 @@
 const Koa_router = require('koa-router');
 
 const { products } = require('./product');
-const { checkAdmin } = require('../../utils/verify');
+const { authBase } = require('../../utils/verify');
 
 const router = new Koa_router({ prefix: '/admin' });
 
-router.get('/product', checkAdmin, products);
+router.get('/product', authBase, products);
 
 module.exports = router;

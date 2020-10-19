@@ -1,26 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const { config } = require('../config');
-
-const checkAdmin = async(ctx, next) => {
-    const { authorization: token } = ctx.headers;
-    if (token) {
-        const verify = jwt.verify(token, config.key());
-        if (verify.role === 'ADMIN' || verify.role === 'CUSTOMER') {
-            return await next();
-        }
-    }
-    ctx.status = 401;
-    ctx.body = {
-        message: 'Authorization Token not found',
-    };
-};
-
-const checkCustomer = async(ctx, next) => {
-    const { authorization: token } = ctx.headers;
-    if (token) {
-        const verify = jwt.verify(token, config.key());
-        if (verify.role === 'CUSTOMER') {
+const authBase = async(ctx, next) => {
+    const user = ctx.state.user;
+    if (user) {
+        if (user.role_id === 1 || user.role_id === 2) {
             return await next();
         }
     }
@@ -31,6 +14,5 @@ const checkCustomer = async(ctx, next) => {
 };
 
 module.exports = {
-    checkAdmin,
-    checkCustomer,
+    authBase,
 };
