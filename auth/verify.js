@@ -11,6 +11,7 @@ const auth = (roles) => {
         } else {
             ctx.status = 403;
             ctx.body = {
+                ok: false,
                 message: 'Authencation no access token ',
             };
         }

@@ -2,7 +2,7 @@ const Koa_router = require('koa-router');
 
 const { login } = require('./login');
 const { products } = require('./product');
-const { auth } = require('../utils/verify');
+const { auth } = require('../auth/verify');
 const passport = require('../base/passport');
 
 const router = new Koa_router();
