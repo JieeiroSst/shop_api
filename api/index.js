@@ -21,4 +21,11 @@ router.get('/test', auth('ADMIN'), (ctx) => {
     };
 });
 
+router.get('/test1', auth('CUSTOMER'), (ctx) => {
+    console.log(ctx.state.user);
+    ctx.body = {
+        data: ctx.state.user,
+    };
+});
+
 module.exports = router;
