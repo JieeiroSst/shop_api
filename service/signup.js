@@ -19,25 +19,3 @@ const signupWeb = async(username, password) => {
     const data = await createCustomer(username, hashPassword, roleId);
     return data;
 };
-
-const signupAdmin = async(username, password) => {
-    const roleId = 1;
-    const res = await getAllUser();
-    const user = res.map((item) => {
-        return item.username;
-    });
-
-    for (let i = 0; i < user.length; i++) {
-        if (user[i] === username) {
-            throw new Error('This user already exists');
-        }
-    }
-    const hashPassword = bcrypt.hashSync(password, 12);
-    const data = createUser(username, hashPassword, roleId);
-    return data;
-};
-
-module.exports = {
-    signupWeb,
-    signupAdmin,
-};

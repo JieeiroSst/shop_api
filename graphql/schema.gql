@@ -1,11 +1,8 @@
 scalar Datetime
 
-#Read me too get(rest api)
 type Query {
-  #node interface
   node(id: ID!): Node
 
-  #collections
   collections(
     first: Int
     after: String
@@ -13,7 +10,6 @@ type Query {
     before: String
   ): CollectionConnection
 
-  #products
   products(
     first: Int
     after: String
@@ -21,7 +17,6 @@ type Query {
     before: String
   ): ProductConnection
 
-  #customer
   customers(
     first: Int
     after: String
@@ -29,29 +24,25 @@ type Query {
     before: String
   ): CustomerConnection
 
-  #users
   users(first: Int, after: String, last: Int, before: String): UserConnection
 }
 
-#Write me too post put delete (rest api)
 type Mutation {
-  #collections
   createCollection(name: String!): Collection
   updateCollection(id: Int!, name: String!): Collection
   deleteCollection(id: Int!): Collection
 
-  #role
   createRole(name: String): Role
   updateRole(id: Int, name: String): Role
   deleteRole(id: Int): Role
 
-  #products
   createProduct(
     name: String
     decription: String
     price: Int
     collectionID: Int
   ): Product
+
   updateProduct(
     id: Int
     name: String
@@ -59,15 +50,14 @@ type Mutation {
     price: Int
     collectionID: Int
   ): Product
+
   deleteProduct(id: Int): Product
 }
 
-#interface node id
 interface Node {
   id: ID!
 }
 
-#page info
 type PageInfo {
   hashNextPage: Boolean
   hasPreviousPage: Boolean
@@ -75,13 +65,11 @@ type PageInfo {
   endCursor: String
 }
 
-#table roles
 type Role {
   id: ID!
   name: String!
 }
 
-#table customers
 type CustomerEdge {
   node: Customer
   cursor: String
@@ -103,7 +91,6 @@ type Customer implements Node {
   role: Role
 }
 
-#table users
 type User implements Node {
   id: ID!
   username: String!
@@ -125,7 +112,6 @@ type UserConnection {
   total: Int
 }
 
-#table products
 type Product implements Node {
   id: ID!
   name: String
@@ -148,7 +134,6 @@ type ProductConnection {
   total: Int
 }
 
-#table collections
 type Collection implements Node {
   id: ID!
   name: String

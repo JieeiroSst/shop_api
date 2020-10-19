@@ -5,8 +5,7 @@ const { globalIdField } = require('graphql-relay');
 const typeDefs = require('../typeDeft');
 const scalar = require('../scalar/isoDate');
 let resolvers = require('./resolvers');
-const { nodeInterface } = require('../../base/node');
-const node = require('./resolvers/node');
+const { nodeInterface } = require('../../base/joinmonter');
 
 resolvers = {...resolvers, ...scalar };
 

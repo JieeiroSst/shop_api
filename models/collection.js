@@ -2,11 +2,11 @@ const db = require('../db/knex');
 
 const nameTable = 'collections';
 
-const getAllCollection = async() => {
+const collectionAll = async() => {
     return await db(nameTable);
 };
 
-const getByIdCollection = async(id) => {
+const collectionById = async(id) => {
     const condition = {
         id,
     };
@@ -17,7 +17,9 @@ const createCollection = async(name) => {
     const entity = {
         name,
     };
-    return await db(nameTable).insert(entity).returning('*');
+    return await db(nameTable)
+        .insert(entity)
+        .returning('*');
 };
 
 const updateCollection = async(id, name) => {
@@ -28,21 +30,27 @@ const updateCollection = async(id, name) => {
         name,
     };
 
-    return await db(nameTable).where(condition).update(entity).returning('*');
+    return await db(nameTable)
+        .where(condition)
+        .update(entity)
+        .returning('*');
 };
 
-const removeByIdCollection = async(id) => {
+const removeCollectionById = async(id) => {
     const condition = {
         id,
     };
 
-    return await db(nameTable).del().where(condition).returning('*');
+    return await db(nameTable)
+        .del()
+        .where(condition)
+        .returning('*');
 };
 
 module.exports = {
-    getAllCollection,
-    getByIdCollection,
+    collectionAll,
+    collectionById,
     updateCollection,
     createCollection,
-    removeByIdCollection,
+    removeCollectionById,
 };

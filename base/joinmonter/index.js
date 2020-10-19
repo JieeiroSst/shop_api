@@ -1,7 +1,6 @@
 const joinMonter = require('join-monster').default;
-const { connectionFromArray } = require('graphql-relay');
 
-const db = require('../db/knex');
+const db = require('../../db/knex');
 
 const option = { dialect: 'pg' };
 

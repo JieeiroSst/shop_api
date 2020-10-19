@@ -1,9 +1,9 @@
 const { pagination } = require('../../../base/joinmonter');
 
 const {
-    createCollection,
+    collectionAll,
     updateCollection,
-    removeByIdCollection,
+    removeCollectionById,
 } = require('../../../models/collection');
 
 const resolvers = {
