@@ -1,10 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-const authBase = async(ctx, next) => {
-    const user = ctx.state.user;
-    if (user) {
-        if (user.role_id === 1 || user.role_id === 2) {
-            return await next();
+const { roleById } = require('../models/role');
+
+const auth = async(ctx, next) => {
+    const { authorization: token } = ctx.headers;
+
+    if (token) {
+        const user = ctx.state.user;
+        const [role] = await roleById(user.role_id);
+        switch (role.name) {
+            case 'ADMIN':
+                if (user.role_id === 1 || user.role_id === 2) {
+                    return await next();
+                }
+                break;
+            case 'CUSTOMER':
+                if (user.role_id === 2) {
+                    return await next();
+                }
+                break;
         }
     }
     ctx.status = 401;
@@ -14,5 +28,5 @@ const authBase = async(ctx, next) => {
 };
 
 module.exports = {
-    authBase,
+    auth,
 };
