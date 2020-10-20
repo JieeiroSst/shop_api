@@ -22,7 +22,6 @@ const createDataLoader = (resource) => {
         return await Promise.all(
             list.map(async(ids) => {
                 const data = await db(resource).whereRaw(`id = any(?)`, [ids]);
-                console.log(ids, data);
                 return mapIds(ids, data);
             })
         );
