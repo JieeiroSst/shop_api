@@ -1,5 +1,3 @@
-const { result } = require('lodash');
-
 const _ = require('lodash');
 
 const mapIds = (ids, results) => {
