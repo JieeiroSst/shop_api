@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { roleById, roleByName } = require('../models/role');
+const { config } = require('../config');
 
 const auth = (roles) => {
     return async(ctx, next) => {
@@ -18,16 +19,19 @@ const auth = (roles) => {
     };
 };
 
-const context = (roles) => {
+const contexts = (ctx, next) => {
     return async(ctx, next) => {
         const [role] = await roleByName(roles);
         const id = role.id;
-        if (ctx.state.user && id === ctx.state.user.role) await next();
-        else ctx.status = 403;
+        if (ctx.state.user && id === ctx.state.user.role) {
+            await next();
+        } else {
+            ctx.throw('Authencation no access token ');
+        }
     };
 };
 
 module.exports = {
     auth,
-    context,
+    contexts,
 };

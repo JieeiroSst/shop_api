@@ -1,24 +1,31 @@
-const { loader, createDataLoader } = require('../../base/dataloader');
+const { createDataLoader } = require('../../base/dataloader');
 const { pagination } = require('../../base/pagination');
-const db = require('../../db/knex');
+const { roleByName, roleById } = require('../../models/role');
+const { UserById } = require('../../models/user');
 
 const resolvers = {
     Query: {
         products: async(parent, args, context, info) => {
             let { first = null, after = 0, before = 0 } = args;
-            const tableName = 'products';
-            const { total, edges, pageInfo } = await pagination(
-                tableName,
-                first,
-                after,
-                before
-            );
-            const result = {
-                total,
-                edges,
-                pageInfo,
-            };
-            return result;
+            const { user: id } = context.state._passport.session;
+            const [user] = await UserById(id);
+            if (context.state.user.role === user.role_id) {
+                const tableName = 'products';
+                const { total, edges, pageInfo } = await pagination(
+                    tableName,
+                    first,
+                    after,
+                    before
+                );
+                const result = {
+                    total,
+                    edges,
+                    pageInfo,
+                };
+                return result;
+            } else {
+                context.throw('Authencation no access token ');
+            }
         },
     },
 

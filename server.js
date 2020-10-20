@@ -9,7 +9,6 @@ const { passport } = require('./base');
 const { schema } = require('./graphql');
 
 const api = require('./api');
-const { auth, context } = require('./auth/verify');
 
 const app = new koa();
 
@@ -20,9 +19,10 @@ app
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(async(ctx, next) => {
     await new Promise((resolve) => {
-        passport.authenticate('jwt', (err, user) => {
+        passport.authenticate('jwt', async(err, user) => {
             resolve(user);
             ctx.state.user = user;
             let res = { ok: true, mesage: 'Authencation success' };
@@ -38,12 +38,11 @@ app.use(api.routes());
 app.use(
     mount(
         '/graphql',
-        graphqlHTTP(async(ctx) => ({
+        graphqlHTTP(async(ctx, next) => ({
             schema,
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                token: context('ADMIN'),
             },
         }))
     )
