@@ -2,9 +2,14 @@ const koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const json = require('koa-json');
 const session = require('koa-session');
+const mount = require('koa-mount');
+const graphqlHTTP = require('koa-graphql');
 
 const { passport } = require('./base');
+const { schema } = require('./graphql');
+
 const api = require('./api');
+const { auth, context } = require('./auth/verify');
 
 const app = new koa();
 
@@ -29,6 +34,20 @@ app.use(async(ctx, next) => {
 });
 
 app.use(api.routes());
+
+app.use(
+    mount(
+        '/graphql',
+        graphqlHTTP(async(ctx) => ({
+            schema,
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                token: context('ADMIN'),
+            },
+        }))
+    )
+);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

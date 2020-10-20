@@ -18,6 +18,16 @@ const auth = (roles) => {
     };
 };
 
+const context = (roles) => {
+    return async(ctx, next) => {
+        const [role] = await roleByName(roles);
+        const id = role.id;
+        if (ctx.state.user && id === ctx.state.user.role) await next();
+        else ctx.status = 403;
+    };
+};
+
 module.exports = {
     auth,
+    context,
 };
