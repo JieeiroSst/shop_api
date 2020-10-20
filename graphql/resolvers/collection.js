@@ -1,4 +1,4 @@
-const { loader } = require('../../base/dataloder');
+const { loader } = require('../../base/dataloader');
 const { pagination } = require('../../base/pagination');
 
 const resolvers = {

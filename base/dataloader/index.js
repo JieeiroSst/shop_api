@@ -17,12 +17,11 @@ const loader = () => ({
     }),
 });
 
-const createDataLoader = async(resource) => {
+const createDataLoader = (resource) => {
     return new DataLoader(async(list) => {
         return await Promise.all(
             list.map(async(ids) => {
-                const result = await db(resource).whereRaw(`id = any(?)`, [ids]);
-                return result;
+                return await db(resource).whereRaw(`id = any(?)`, [ids]);
             })
         );
     });

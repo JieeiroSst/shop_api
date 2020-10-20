@@ -21,6 +21,8 @@ type Query {
     before: String
   ): ProductConnection
 
+  test(first: Int, after: String, last: Int, before: String): ProductConnection
+
   #customer
   customers(
     first: Int

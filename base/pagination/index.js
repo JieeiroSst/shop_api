@@ -1,29 +1,22 @@
 const { knexPaginator } = require('apollo-cursor-pagination');
 const Base64 = require('js-base64');
+const { createDataLoader } = require('../dataloader');
 
 const db = require('../../db/knex');
-
-const paginations = async(query, args, loader) => {
-    const paginate = await knexPaginator(query, args);
-    console.log(paginate);
-    const ids = paginate.edges.map((item) => item.node.id);
-    const results = await loader.load(ids);
-    paginate.edges.map((item, i) => {
-        item.node = results[i];
-    });
-    paginate.total = paginate.totalCount;
-    return paginate;
-};
 
 const pagination = async(tableName, first, after, before) => {
     const [res] = await db(tableName).count('*');
     const total = res.count;
     const id = Base64.decode(after);
-    let query = db(tableName).where(db.raw(`id > ?`, id));
+    let query = db(tableName)
+        .select('id')
+        .where(db.raw(`id > ?`, id));
     if (first) {
         query = query.limit(first);
     }
-    let items = await query;
+    let result = await query;
+    const ids = result.map((item) => item.id);
+    const items = await createDataLoader('products').load(ids);
     let start = 0;
     if (after) {
         const index = items.findIndex((item) => {
@@ -59,4 +52,4 @@ const pagination = async(tableName, first, after, before) => {
     };
 };
 
-module.exports = { pagination, paginations };
+module.exports = { pagination };
