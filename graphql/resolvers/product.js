@@ -1,5 +1,6 @@
-const { loader } = require('../../base/dataloder');
-const { pagination } = require('../../base/pagination');
+const { loader, createDataLoader } = require('../../base/dataloder');
+const { pagination, paginations } = require('../../base/pagination');
+const db = require('../../db/knex');
 
 const resolvers = {
     Query: {
@@ -12,13 +13,17 @@ const resolvers = {
                 after,
                 before
             );
-
             const result = {
                 total,
                 edges,
                 pageInfo,
             };
             return result;
+            //     const query = db('products').select('id');
+            //     const loaders = await createDataLoader('products');
+            //     const data = await paginations(query, args, loaders);
+            //     console.log(data);
+            //     return data;
         },
     },
 

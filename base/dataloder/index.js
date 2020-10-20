@@ -1,6 +1,7 @@
 const DataLoader = require('dataloader');
 
 const db = require('../../db/knex');
+const { mapIds } = require('../../utils/map');
 
 const loader = () => ({
     collectionProductById: new DataLoader(async(id) => {
@@ -16,4 +17,15 @@ const loader = () => ({
     }),
 });
 
-module.exports = { loader };
+const createDataLoader = async(resource) => {
+    return new DataLoader(async(list) => {
+        return await Promise.all(
+            list.map(async(ids) => {
+                const result = await db(resource).whereRaw(`id = any(?)`, [ids]);
+                return result;
+            })
+        );
+    });
+};
+
+module.exports = { loader, createDataLoader };
