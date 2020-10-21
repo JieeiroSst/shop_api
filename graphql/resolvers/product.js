@@ -23,8 +23,10 @@ const resolvers = {
                 };
                 return result;
             } else {
-                ctx.status = 401;
-                ctx.throw('HTTP 401 Error – Unauthorized');
+                return {
+                    status: (ctx.status = 401),
+                    message: ctx.throw('HTTP 401 Error – Unauthorized'),
+                };
             }
         },
     },
