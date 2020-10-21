@@ -4,6 +4,7 @@ const { roleByName } = require('../models/role');
 
 const auth = (roles) => {
     return async(ctx, next) => {
+        console.log(ctx.state);
         const [role] = await roleByName(roles);
         const id = role.id;
         if (ctx.state.user && id === ctx.state.user.role) {
@@ -18,19 +19,20 @@ const auth = (roles) => {
     };
 };
 
-const contexts = (ctx, next) => {
+const checkRole = (roles) => {
     return async(ctx, next) => {
         const [role] = await roleByName(roles);
         const id = role.id;
         if (ctx.state.user && id === ctx.state.user.role) {
             await next();
         } else {
-            ctx.throw('Authencation no access token ');
+            ctx.throw(401, 'HTTP 401 Error – Unauthorized');
         }
     };
 };
 
 module.exports = {
     auth,
-    contexts,
+
+    checkRole,
 };

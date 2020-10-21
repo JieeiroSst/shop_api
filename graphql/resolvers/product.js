@@ -1,33 +1,32 @@
 const { createDataLoader } = require('../../base/dataloader');
 const { pagination } = require('../../base/pagination');
-const { UserById } = require('../../models/user');
+const { checkRole } = require('../../auth/verify');
+const { roleByName } = require('../../models/role');
 
 const resolvers = {
     Query: {
         products: async(parent, args, ctx, info) => {
             let { first = null, after = 0, before = 0 } = args;
-            const { user: id } = ctx.state._passport.session;
-            const [user] = await UserById(id);
-            if (ctx.state.user.role === user.role_id) {
-                const tableName = 'products';
-                const { total, edges, pageInfo } = await pagination(
-                    tableName,
-                    first,
-                    after,
-                    before
-                );
-                const result = {
-                    total,
-                    edges,
-                    pageInfo,
-                };
-                return result;
-            } else {
-                return {
-                    status: (ctx.status = 401),
-                    message: ctx.throw('HTTP 401 Error – Unauthorized'),
-                };
+            const [role] = await roleByName('ADMIN');
+            const id = role.id;
+            if (id !== ctx.state.user.role) {
+                ctx.status = 401;
+                ctx.throw(401, 'HTTP 401 Error – Unauthorized');
             }
+            const tableName = 'products';
+            const { total, edges, pageInfo } = await pagination(
+                tableName,
+                first,
+                after,
+                before
+            );
+
+            const result = {
+                total,
+                edges,
+                pageInfo,
+            };
+            return result;
         },
     },
 
