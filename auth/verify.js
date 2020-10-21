@@ -23,9 +23,8 @@ const checkRole = (roles) => {
     return async(ctx, next) => {
         const [role] = await roleByName(roles);
         const id = role.id;
-        if (ctx.state.user && id === ctx.state.user.role) {
-            await next();
-        } else {
+        if (id !== ctx.state.user.role) {
+            ctx.status = 401;
             ctx.throw(401, 'HTTP 401 Error – Unauthorized');
         }
     };
