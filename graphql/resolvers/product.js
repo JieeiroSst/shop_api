@@ -4,11 +4,11 @@ const { UserById } = require('../../models/user');
 
 const resolvers = {
     Query: {
-        products: async(parent, args, context, info) => {
+        products: async(parent, args, ctx, info) => {
             let { first = null, after = 0, before = 0 } = args;
-            const { user: id } = context.state._passport.session;
+            const { user: id } = ctx.state._passport.session;
             const [user] = await UserById(id);
-            if (context.state.user.role === user.role_id) {
+            if (ctx.state.user.role === user.role_id) {
                 const tableName = 'products';
                 const { total, edges, pageInfo } = await pagination(
                     tableName,
@@ -23,8 +23,8 @@ const resolvers = {
                 };
                 return result;
             } else {
-                context.status = 401;
-                throw new Error('HTTP 401 Error – Unauthorized');
+                ctx.status = 401;
+                ctx.throw('HTTP 401 Error – Unauthorized');
             }
         },
     },
