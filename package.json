@@ -11,6 +11,7 @@
     "license": "ISC",
     "dependencies": {
         "apollo-cursor-pagination": "^0.8.0",
+        "apollo-server": "^2.18.2",
         "assert": "^2.0.0",
         "atob": "^2.1.2",
         "bcrypt": "^5.0.0",
@@ -20,6 +21,7 @@
         "dotenv": "^8.2.0",
         "graphql": "^0.13.2",
         "graphql-iso-date": "^3.6.1",
+        "graphql-middleware": "^4.0.2",
         "graphql-relay": "^0.6.0",
         "graphql-tools": "^4.0.6",
         "join-monster": "^2.1.2",
@@ -44,6 +46,7 @@
         "passport-local": "^1.0.0",
         "pg": "^8.4.1",
         "require-text": "0.0.1",
-        "session": "^0.1.0"
+        "session": "^0.1.0",
+        "uppercamelcase": "^3.0.0"
     }
 }

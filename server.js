@@ -40,10 +40,14 @@ app.use(
         '/graphql',
         graphqlHTTP(async(ctx, next) => ({
             schema,
+            formatError: (err) => ({
+                message: err.message,
+            }),
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             },
+            graphiql: true,
         }))
     )
 );

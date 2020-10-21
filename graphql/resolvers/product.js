@@ -1,6 +1,5 @@
 const { createDataLoader } = require('../../base/dataloader');
 const { pagination } = require('../../base/pagination');
-const { roleByName, roleById } = require('../../models/role');
 const { UserById } = require('../../models/user');
 
 const resolvers = {
@@ -24,7 +23,8 @@ const resolvers = {
                 };
                 return result;
             } else {
-                context.throw('Authencation no access token ');
+                context.status = 401;
+                throw new Error('HTTP 401 Error – Unauthorized');
             }
         },
     },

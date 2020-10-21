@@ -15,7 +15,6 @@ const login = (ctx, next) => {
             };
             const token = jwt.sign(pay_load, config.key());
             ctx.body = { success: true, token };
-            console.log(user);
             return ctx.login(user);
         }
     })(ctx, next);
