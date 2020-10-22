@@ -15,7 +15,7 @@ const pagination = async(tableName, first, after, before) => {
     }
     let result = await query;
     const ids = result.map((item) => item.id);
-    const items = await createDataLoader('products').load(ids);
+    const items = await createDataLoader(tableName).load(ids);
     let start = 0;
     if (after) {
         const index = items.findIndex((item) => {

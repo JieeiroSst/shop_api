@@ -5,7 +5,7 @@ const session = require('koa-session');
 const mount = require('koa-mount');
 const graphqlHTTP = require('./graphql/graphql-middlewasre');
 
-const { passport } = require('./base');
+const { passport } = require('./base/passport');
 const { schemaAdmin } = require('./graphql/admin');
 const { schemaWeb } = require('./graphql/web');
 

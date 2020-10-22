@@ -5,13 +5,13 @@ const auth = (roles) => {
         console.log(ctx.state);
         const [role] = await roleByName(roles);
         const id = role.id;
-        if (ctx.state.user && id === ctx.state.user.role) {
+        if (id === ctx.state.user.role) {
             await next();
         } else {
             ctx.status = 403;
             ctx.body = {
                 ok: false,
-                message: 'Authencation no access token ',
+                message: 'HTTP 401 Error – Unauthorized',
             };
         }
     };
@@ -30,6 +30,5 @@ const checkRole = (roles) => {
 
 module.exports = {
     auth,
-
     checkRole,
 };

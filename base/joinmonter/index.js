@@ -1,6 +1,5 @@
-const jonMonter = require('join-monster').default;
-
 const { default: joinMonster } = require('join-monster');
+
 const db = require('../../db/knex');
 
 const option = { dialect: 'pg' };
