@@ -37,7 +37,7 @@ app.use(api.routes());
 
 app.use(
     mount(
-        '/graphql',
+        '/admin/graphql',
         graphqlHTTP(async(ctx, next) => ({
             schema,
             formatError: (err) => ({

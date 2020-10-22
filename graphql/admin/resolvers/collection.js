@@ -6,7 +6,7 @@ const resolvers = {
     Query: {
         collections: createResolver(async(args, ctx, info) => {
             return await pagination(args, ctx, info);
-        }, 'CUSTOMER'),
+        }, 'ADMIN'),
     },
 
     Mutation: {
@@ -16,7 +16,7 @@ const resolvers = {
             const data = await createCollection(name);
             console.log(data);
             return data;
-        }, 'CUSTOMER'),
+        }, 'ADMIN'),
     },
 };
 
