@@ -6,7 +6,7 @@ const mount = require('koa-mount');
 const graphqlHTTP = require('./graphql/graphql-middlewasre');
 
 const { passport } = require('./base');
-const { schema } = require('./graphql');
+const { schema } = require('./graphql/admin');
 
 const api = require('./api');
 

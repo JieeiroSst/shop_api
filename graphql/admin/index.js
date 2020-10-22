@@ -2,10 +2,10 @@ const { makeExecutableSchema } = require('graphql-tools');
 const joinMonsterAdapt = require('join-monster-graphql-tools-adapter');
 const { globalIdField } = require('graphql-relay');
 
-const typeDefs = require('./typeDeft');
-const scalar = require('./scalar/isoDate');
+const typeDefs = require('../typeDeft');
+const scalar = require('../scalar/isoDate');
 let resolvers = require('./resolvers');
-const { nodeInterface } = require('../base/node');
+const { nodeInterface } = require('../../base/node');
 
 resolvers = {...resolvers, ...scalar };
 

@@ -1,6 +1,6 @@
-const { pagination } = require('../../base/joinmonter');
-const { createResolver } = require('../resolver');
-const { createProduct } = require('../../models/product');
+const { pagination } = require('../../../base/joinmonter');
+const { createResolver } = require('../../resolver');
+const { createProduct } = require('../../../models/product');
 
 const role = 'ADMIN';
 

@@ -1,4 +1,4 @@
-const { nodeField } = require('../../base/node');
+const { nodeField } = require('../../../base/node');
 
 const resolvers = {
     Query: {

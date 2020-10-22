@@ -1,6 +1,6 @@
-const { pagination } = require('../../base/joinmonter');
-const { createResolver } = require('../resolver');
-const { createCollection } = require('../../models/collection');
+const { pagination } = require('../../../base/joinmonter');
+const { createResolver } = require('../../resolver');
+const { createCollection } = require('../../../models/collection');
 
 const resolvers = {
     Query: {
