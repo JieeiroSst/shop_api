@@ -20,7 +20,7 @@ const createProduct = async(name, decription, price, collection_id) => {
         price,
         collection_id,
     };
-
+    console.log(entity);
     return await db(nameTable)
         .insert(entity)
         .returning('*');

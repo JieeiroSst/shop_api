@@ -1,19 +1,23 @@
 const { pagination } = require('../../base/joinmonter');
-const { roleByName } = require('../../models/role');
+const { createResolver } = require('../resolver');
+const { createCollection } = require('../../models/collection');
 
 const resolvers = {
     Query: {
-        collections: async(parent, args, ctx, info) => {
-            const [role] = await roleByName('ADMIN');
-            const id = role.id;
-            if (id !== ctx.state.user.role) {
-                ctx.throw(403, 'HTTP 401 Error – Unauthorized');
-            }
+        collections: createResolver(async(args, ctx, info) => {
             return await pagination(args, ctx, info);
-        },
+        }, 'CUSTOMER'),
     },
 
-    Mutation: {},
+    Mutation: {
+        createCollection: createResolver(async(args, ctx, info) => {
+            const { name } = args;
+            console.log(name);
+            const data = await createCollection(name);
+            console.log(data);
+            return data;
+        }, 'CUSTOMER'),
+    },
 };
 
 module.exports = { resolvers };
