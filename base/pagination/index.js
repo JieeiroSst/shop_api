@@ -1,4 +1,3 @@
-const { knexPaginator } = require('apollo-cursor-pagination');
 const Base64 = require('js-base64');
 const { createDataLoader } = require('../dataloader');
 

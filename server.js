@@ -7,6 +7,7 @@ const graphqlHTTP = require('./graphql/graphql-middlewasre');
 
 const { passport } = require('./base');
 const { schema } = require('./graphql/admin');
+const { schemaWeb } = require('./graphql/web');
 
 const api = require('./api');
 
@@ -40,6 +41,23 @@ app.use(
         '/admin/graphql',
         graphqlHTTP(async(ctx, next) => ({
             schema,
+            formatError: (err) => ({
+                message: err.message,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            graphiql: true,
+        }))
+    )
+);
+
+app.use(
+    mount(
+        '/graphql',
+        graphqlHTTP(async(ctx, next) => ({
+            schema: schemaWeb,
             formatError: (err) => ({
                 message: err.message,
             }),
