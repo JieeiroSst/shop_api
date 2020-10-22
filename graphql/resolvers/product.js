@@ -10,8 +10,7 @@ const resolvers = {
             const [role] = await roleByName('ADMIN');
             const id = role.id;
             if (id !== ctx.state.user.role) {
-                ctx.status = 401;
-                ctx.throw(401, 'HTTP 401 Error – Unauthorized');
+                return ctx.throw(403, 'HTTP 401 Error – Unauthorized');
             }
             const tableName = 'products';
             const { total, edges, pageInfo } = await pagination(

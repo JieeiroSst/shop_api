@@ -3,7 +3,7 @@ const bodyParser = require('koa-bodyparser');
 const json = require('koa-json');
 const session = require('koa-session');
 const mount = require('koa-mount');
-const graphqlHTTP = require('koa-graphql');
+const graphqlHTTP = require('./graphql/graphql-middlewasre');
 
 const { passport } = require('./base');
 const { schema } = require('./graphql');
