@@ -18,7 +18,9 @@ const roleByName = async(name) => {
     const condition = {
         name,
     };
-    return await db(nameTable).where(condition);
+    return await db(nameTable)
+        .where(condition)
+        .first();
 };
 
 const createRole = async(name) => {

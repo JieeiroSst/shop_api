@@ -12,6 +12,7 @@ const option = {
 };
 
 module.exports = new JwtStrategy(option, (jwt_payload, done) => {
+    console.log(jwt_payload);
     if (!jwt_payload) {
         done(new Error('invalid authencation token'));
     } else {

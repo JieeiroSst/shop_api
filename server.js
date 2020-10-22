@@ -22,9 +22,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(async(ctx, next) => {
-    await new Promise((resolve) => {
+    new Promise((resolve) => {
         passport.authenticate('jwt', async(err, user) => {
-            resolve(user);
+            await resolve(user);
             ctx.state.user = user;
             let res = { ok: true, mesage: 'Authencation success' };
             if (!user) res = { ok: false, message: 'authencation failed' };

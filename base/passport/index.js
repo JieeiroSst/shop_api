@@ -7,13 +7,13 @@ const { UserById } = require('../../models/user');
 passport.use(LocalStrategy);
 passport.use(JwtStrategy);
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
 passport.deserializeUser(async(id, done) => {
     const [user] = await UserById(id);
     done(null, user);
+});
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
 });
 
 module.exports = { passport };

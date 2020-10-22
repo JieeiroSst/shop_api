@@ -17,18 +17,6 @@ const auth = (roles) => {
     };
 };
 
-const checkRole = (roles) => {
-    return async(ctx, next) => {
-        const [role] = await roleByName(roles);
-        const id = role.id;
-        if (id !== ctx.state.user.role) {
-            ctx.status = 401;
-            ctx.throw(401, 'HTTP 401 Error – Unauthorized');
-        }
-    };
-};
-
 module.exports = {
     auth,
-    checkRole,
 };

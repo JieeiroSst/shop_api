@@ -16,8 +16,7 @@ router.get('/test', auth('ADMIN'), (ctx) => {
     };
 });
 
-router.get('/test1', auth('CUSTOMER'), (ctx) => {
-    console.log(ctx.state.user);
+router.get('/test1', auth('CUSTOMERS'), (ctx) => {
     ctx.body = {
         data: ctx.state.user,
     };
