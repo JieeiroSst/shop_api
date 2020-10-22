@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-
 const { roleByName } = require('../models/role');
 
 const auth = (roles) => {
