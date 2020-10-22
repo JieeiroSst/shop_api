@@ -6,7 +6,7 @@ const mount = require('koa-mount');
 const graphqlHTTP = require('./graphql/graphql-middlewasre');
 
 const { passport } = require('./base');
-const { schema } = require('./graphql/admin');
+const { schemaAdmin } = require('./graphql/admin');
 const { schemaWeb } = require('./graphql/web');
 
 const api = require('./api');
@@ -40,7 +40,7 @@ app.use(
     mount(
         '/admin/graphql',
         graphqlHTTP(async(ctx, next) => ({
-            schema,
+            schema: schemaAdmin,
             formatError: (err) => ({
                 message: err.message,
             }),

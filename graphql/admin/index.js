@@ -9,9 +9,9 @@ const { nodeInterface } = require('../../base/node');
 
 resolvers = {...resolvers, ...scalar };
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schemaAdmin = makeExecutableSchema({ typeDefs, resolvers });
 
-joinMonsterAdapt(schema, {
+joinMonsterAdapt(schemaAdmin, {
     Query: {
         fields: {
             collections: {
@@ -150,4 +150,4 @@ joinMonsterAdapt(schema, {
     },
 });
 
-module.exports = { schema };
+module.exports = { schemaAdmin };
