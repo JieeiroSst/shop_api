@@ -13,20 +13,28 @@ const getByIdCollection = async (collection_id) => {
   return await db(nameTable).where(condition);
 };
 
-const createCollection = async (title, product, link) => {
+const createCollection = async (
+  collection_id,
+  title,
+  product,
+  link,
+  published_at
+) => {
   const entity = {
+    collection_id,
     title,
     product,
     link,
+    published_at,
   };
   return await db(nameTable)
     .insert(entity)
     .returning("*");
 };
 
-const updateCollection = async (collection_id,title, product, link) => {
+const updateCollection = async (collection_id, title, product, link) => {
   const condition = {
-    collection_id
+    collection_id,
   };
   const entity = {
     title,
@@ -42,7 +50,7 @@ const updateCollection = async (collection_id,title, product, link) => {
 
 const removeByIdCollection = async (collection_id) => {
   const condition = {
-    collection_id
+    collection_id,
   };
 
   return await db(nameTable)
