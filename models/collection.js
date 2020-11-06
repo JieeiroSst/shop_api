@@ -1,48 +1,60 @@
-const db = require('../db/knex');
+const db = require("../db/knex");
 
-const nameTable = 'collections';
+const nameTable = "collections";
 
-const getAllCollection = async() => {
-    return await db(nameTable);
+const getAllCollection = async () => {
+  return await db(nameTable);
 };
 
-const getByIdCollection = async(id) => {
-    const condition = {
-        id,
-    };
-    return await db(nameTable).where(condition);
+const getByIdCollection = async (collection_id) => {
+  const condition = {
+    collection_id,
+  };
+  return await db(nameTable).where(condition);
 };
 
-const createCollection = async(name) => {
-    const entity = {
-        name,
-    };
-    return await db(nameTable).insert(entity).returning('*');
+const createCollection = async (title, product, link) => {
+  const entity = {
+    title,
+    product,
+    link,
+  };
+  return await db(nameTable)
+    .insert(entity)
+    .returning("*");
 };
 
-const updateCollection = async(id, name) => {
-    const condition = {
-        id,
-    };
-    const entity = {
-        name,
-    };
+const updateCollection = async (collection_id,title, product, link) => {
+  const condition = {
+    collection_id
+  };
+  const entity = {
+    title,
+    product,
+    link,
+  };
 
-    return await db(nameTable).where(condition).update(entity).returning('*');
+  return await db(nameTable)
+    .where(condition)
+    .update(entity)
+    .returning("*");
 };
 
-const removeByIdCollection = async(id) => {
-    const condition = {
-        id,
-    };
+const removeByIdCollection = async (collection_id) => {
+  const condition = {
+    collection_id
+  };
 
-    return await db(nameTable).del().where(condition).returning('*');
+  return await db(nameTable)
+    .del()
+    .where(condition)
+    .returning("*");
 };
 
 module.exports = {
-    getAllCollection,
-    getByIdCollection,
-    updateCollection,
-    createCollection,
-    removeByIdCollection,
+  getAllCollection,
+  getByIdCollection,
+  updateCollection,
+  createCollection,
+  removeByIdCollection,
 };
