@@ -1,12 +1,12 @@
 const Koa_router = require("koa-router");
 const { google } = require("googleapis");
+const fs = require("fs");
+const nodeExel = require("excel-export");
+
 const { readData } = require("../utils/sheets");
-const { createCollection } = require("../models/collection");
+const { createCollection, getAllCollection } = require("../models/collection");
 
 const router = new Koa_router();
-
-const copes = ["https://www.googleapis.com/auth/spreadsheets"];
-const sheets = google.sheets("v4");
 
 router.get("/test", (ctx) => {
   ctx.body = {
@@ -48,6 +48,43 @@ router.post("/write", async (ctx) => {
       value,
     };
   }
+});
+
+router.post("/export", async (ctx) => {
+  const confgruration = {};
+  const data = await getAllCollection();
+  confgruration.rows = data;
+  confgruration.cols = [
+    {
+      caption: "collection_id",
+      type: "Number",
+      width: 20,
+    },
+    {
+      caption: "title",
+      type: "String",
+      width: 20,
+    },
+    {
+      caption: "product",
+      type: "String",
+      width: 20,
+    },
+    {
+      caption: "link",
+      type: "String",
+      width: 20,
+    },
+    {
+      caption: "published_at",
+      type: "Date",
+      width: 20,
+    },
+  ];
+
+  const result = nodeExel.execute(confgruration);
+  ctx.set("Content-Type", "application/vnd.openxmlformates");
+  ctx.set("Content-Disposition", "attachment;filename=" + "file_name.xlsx");
 });
 
 module.exports = router;

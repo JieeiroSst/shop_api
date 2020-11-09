@@ -12,7 +12,7 @@ app.use(bodyParser());
 
 app.use(api.routes());
 
-const port = process.env.PORT || 9000;
+const port =  8080;
 app.listen(port, () => {
   console.log(`server running port ${port}`);
 });

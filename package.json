@@ -16,6 +16,7 @@
         "btoa": "^1.2.1",
         "dataloader": "^2.0.0",
         "dotenv": "^8.2.0",
+        "excel-export": "^0.5.1",
         "google-spreadsheet": "^3.0.13",
         "googleapis": "^39.2.0",
         "graphql": "^0.13.2",
