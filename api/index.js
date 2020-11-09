@@ -43,7 +43,7 @@ router.post("/write", async (ctx) => {
     return {
       published_at: item[0],
       product: item[1],
-      collection_id: item[2],
+      collection_id: item[2], 
       title: item[3],
       link: item[4],
     };
