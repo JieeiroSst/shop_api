@@ -74,7 +74,7 @@ router.post("/export", async (ctx) => {
     .pipe(ws);
 
   ctx.body = {
-    result: "ok",
+    result: "Write to data.csv successfully!",
   };
 });
 
