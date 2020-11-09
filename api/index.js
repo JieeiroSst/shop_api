@@ -1,17 +1,31 @@
 const Koa_router = require("koa-router");
 const { google } = require("googleapis");
 const fs = require("fs");
-const nodeExel = require("excel-export");
+const fastcsv = require("fast-csv");
+
+const ws = fs.createWriteStream("data/data.csv");
 
 const { readData } = require("../utils/sheets");
 const { createCollection, getAllCollection } = require("../models/collection");
 
 const router = new Koa_router();
 
-router.get("/test", (ctx) => {
+router.get("/test", async (ctx) => {
+  const parameters = "Filtered Products!A2:E2009";
+  const data = await readData(parameters);
+  const array = data.map((item) => {
+    return {
+      published_at: item[0],
+      product: item[1],
+      collection_id: item[2],
+      title: item[3],
+      link: item[4],
+    };
+  });
   ctx.body = {
     status: 201,
     message: "hello world",
+    result: array,
   };
 });
 
@@ -51,40 +65,18 @@ router.post("/write", async (ctx) => {
 });
 
 router.post("/export", async (ctx) => {
-  const confgruration = {};
   const data = await getAllCollection();
-  confgruration.rows = data;
-  confgruration.cols = [
-    {
-      caption: "collection_id",
-      type: "Number",
-      width: 20,
-    },
-    {
-      caption: "title",
-      type: "String",
-      width: 20,
-    },
-    {
-      caption: "product",
-      type: "String",
-      width: 20,
-    },
-    {
-      caption: "link",
-      type: "String",
-      width: 20,
-    },
-    {
-      caption: "published_at",
-      type: "Date",
-      width: 20,
-    },
-  ];
 
-  const result = nodeExel.execute(confgruration);
-  ctx.set("Content-Type", "application/vnd.openxmlformates");
-  ctx.set("Content-Disposition", "attachment;filename=" + "file_name.xlsx");
+  fastcsv
+    .write(data, { headers: true })
+    .on("finish", function() {
+      console.log("Write to data.csv successfully!");
+    })
+    .pipe(ws);
+
+  ctx.body = {
+    result: "ok",
+  };
 });
 
 module.exports = router;
