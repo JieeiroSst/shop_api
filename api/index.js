@@ -2,6 +2,7 @@ const Koa_router = require("koa-router");
 const { google } = require("googleapis");
 const fs = require("fs");
 const fastcsv = require("fast-csv");
+const path = require("path");
 
 const ws = fs.createWriteStream("data/data.csv");
 
@@ -77,6 +78,20 @@ router.post("/export", async (ctx) => {
   ctx.body = {
     result: "ok",
   };
+});
+
+router.post("/dowload/:file", async (ctx) => {
+  const fileName = `${__dirname}/downloads/${ctx.params.file}`;
+  try {
+    if (fs.existsSync(fileName)) {
+      ctx.body = fs.createReadStream(fileName);
+      ctx.attachment(fileName);
+    } else {
+      ctx.throw(400, "Requested file not found on server");
+    }
+  } catch (error) {
+    ctx.throw(500, error);
+  }
 });
 
 module.exports = router;
