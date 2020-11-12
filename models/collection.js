@@ -6,6 +6,10 @@ const getAllCollection = async () => {
   return await db(nameTable);
 };
 
+const getAllCollectionStream = async () => {
+  return await db(nameTable).stream();
+};
+
 const getByIdCollection = async (collection_id) => {
   const condition = {
     collection_id,
@@ -65,4 +69,5 @@ module.exports = {
   updateCollection,
   createCollection,
   removeByIdCollection,
+  getAllCollectionStream,
 };

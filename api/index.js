@@ -1,11 +1,16 @@
 const Koa_router = require("koa-router");
 const fs = require("fs");
 const fastcsv = require("fast-csv");
-
-const ws = fs.createWriteStream("data/data.csv");
+const csvWriter = require("csv-write-stream");
 
 const { readData } = require("../utils/sheets");
-const { createCollection, getAllCollection } = require("../models/collection");
+const {
+  createCollection,
+  getAllCollection,
+  getAllCollectionStream,
+} = require("../models/collection");
+const { MyFileStreaming } = require("../utils/dowload");
+const { Stream } = require("stream");
 
 const router = new Koa_router();
 
@@ -39,29 +44,12 @@ router.get("/read", async (ctx) => {
 router.post("/write", async (ctx) => {
   const parameters = "Filtered Products!A2:E2009";
   const data = await readData(parameters);
-  const array = data.map((item) => {
-    return {
-      published_at: item[0],
-      product: item[1],
-      collection_id: item[2], 
-      title: item[3],
-      link: item[4],
-    };
-  });
-
-  for (let item of array) {
-    const value = await createCollection(
-      item.collection_id,
-      item.title,
-      item.product,
-      item.link,
-      item.published_at
-    );
-    ctx.body = {
-      value,
-    };
+  for (const item of data) {
+    await createCollection(item[2], item[3], item[1], item[4], item[0]);
   }
 });
+
+const ws = fs.createWriteStream("data/data.csv");
 
 router.post("/export", async (ctx) => {
   const data = await getAllCollection();
@@ -78,7 +66,7 @@ router.post("/export", async (ctx) => {
   };
 });
 
-router.post("/dowload/:file", async (ctx) => {
+router.get("/dowload/:file", async (ctx) => {
   const fileName = `data/${ctx.params.file}.csv`;
   try {
     if (fs.existsSync(fileName)) {
@@ -90,6 +78,31 @@ router.post("/dowload/:file", async (ctx) => {
   } catch (error) {
     ctx.throw(500, error);
   }
+});
+
+router.get("/export/stream", async (ctx) => {
+  const data = await getAllCollectionStream();
+  const writer = csvWriter({
+    collection_id: "collection_id",
+    product: "product",
+    title: "title",
+    link: "link",
+    published_at: "published_at",
+  });
+  for await (let item of data) {
+    writer.write({
+      collection_id: item.collection_id,
+      product: item.product,
+      title: item.title,
+      link: item.link,
+      published_at: item.published_at,
+    });
+  }
+  ctx.disableBodyParser = true;
+  ctx.set("Content-disposition", `attachment; filename=faqs.csv`);
+  ctx.body = writer;
+  ctx.status = 200;
+  writer.end();
 });
 
 module.exports = router;
